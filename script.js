@@ -5,6 +5,10 @@ let highScore = 0;
 localStorage.getItem("highScore");
 const highestScore = document.getElementById("highestScore");
 const resetBtn = document.querySelector("#resetBtn");
+const foodSound = new Audio('food.mp3');
+const gameOver = new Audio('gameover.mp3');
+const move = new Audio('move.mp3')
+const music = new Audio('music.mp3')
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 const boardBackground = "#333";
@@ -34,6 +38,7 @@ gameStart();
 
 function gameStart(){
     running= true;
+    music.play();
     scoreText.textContent = score;
     createFood();
     drawFood();
@@ -68,6 +73,7 @@ function createFood(){
     }
     foodX = randomFood(0, gameWidth - unitSize);
     foodY = randomFood(0, gameWidth - unitSize);
+    foodSound.play();
 };
 
 function drawFood(){
@@ -97,12 +103,17 @@ function moveSnake(){
 };
 
 function drawSnake(){
+    ctx.fillStyle = "#f5ff00";
+    ctx.fillRect(snake[0].x, snake[0].y, unitSize, unitSize);
+    ctx.strokeRect(snake[0].x, snake[0].y, unitSize, unitSize);
+
     ctx.fillStyle = snakeColor;
     ctx.strokeStyle = snakeBorder;
-    snake.forEach(snakePart => {
-        ctx.fillRect(snakePart.x, snakePart.y, unitSize, unitSize);
-        ctx.strokeRect(snakePart.x, snakePart.y, unitSize, unitSize);
-    })
+    for(let i = 1; i<snake.length; i++){
+        ctx.fillRect(snake[i].x, snake[i].y, unitSize, unitSize);
+        ctx.strokeRect(snake[i].x, snake[i].y, unitSize, unitSize);
+
+    }
 };
 
 function changeDirection(e){
@@ -121,18 +132,22 @@ function changeDirection(e){
         case(keyPressed == LEFT && !goingRight):
             xVelocity = -unitSize;
             yVelocity = 0;
+            move.play();
             break;
         case(keyPressed == UP && !goingDown):
             xVelocity = 0;
             yVelocity = -unitSize;
+            move.play();
             break;
         case(keyPressed == RIGHT && !goingLeft):
             xVelocity = unitSize;
             yVelocity = 0;
+            move.play();
             break;
         case(keyPressed == DOWN && !goingUp):
             xVelocity = 0;
             yVelocity = unitSize;
+            move.play();
             break;
     }
 };
@@ -164,6 +179,8 @@ function displayGameOver(){
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText("GAME OVER!!", gameWidth / 2, gameHeight / 2);
+    music.pause();
+    gameOver.play();
     running = false;
 };
 
