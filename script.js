@@ -2,7 +2,7 @@ const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
 let highScore = 0;
-localStorage.getItem("highScore");
+parseInt(localStorage.getItem("highScore"));
 const highestScore = document.getElementById("highestScore");
 const resetBtn = document.querySelector("#resetBtn");
 const foodSound = new Audio('food.mp3');
@@ -37,7 +37,7 @@ resetBtn.addEventListener("click", resetGame);
 gameStart();
 
 function gameStart(){
-    running= true;
+    running = true;
     music.play();
     scoreText.textContent = score;
     createFood();
@@ -90,11 +90,6 @@ function moveSnake(){
         snake.push();
         score+=1;
         scoreText.textContent = score;
-        if(score > highScore){
-            highScore = score;
-            localStorage.setItem("highScore", highScore);
-            highestScore.textContent = highScore; 
-        }
         createFood();
     }
     else{
@@ -172,6 +167,12 @@ function checkGameOver(){
             running = false;
         }
     }
+
+    if(score > highScore){
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        highestScore.textContent = highScore; 
+    }
 };
 
 function displayGameOver(){
@@ -184,8 +185,19 @@ function displayGameOver(){
     running = false;
 };
 
+window.addEventListener("beforeunload", function(){
+    resetGame();
+})
+
+window.onload = function(){
+    highScore = parseInt(localStorage.getItem("highScore")) || 0;
+    highestScore.textContent = highScore; 
+    music.play();
+}
+
 function resetGame(){
     score = 0;
+    scoreText.textContent = score;
     xVelocity = unitSize;
     yVelocity = 0;
     snake = [
