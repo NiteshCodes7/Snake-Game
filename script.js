@@ -187,12 +187,13 @@ function displayGameOver(){
 
 window.addEventListener("beforeunload", function(){
     resetGame();
+    music.play();
 })
 
 window.onload = function(){
+    music.play();
     highScore = parseInt(localStorage.getItem("highScore")) || 0;
     highestScore.textContent = highScore; 
-    music.play();
 }
 
 function resetGame(){
