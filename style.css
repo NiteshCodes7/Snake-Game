@@ -37,7 +37,6 @@ body{
 #highestScore{
     font-family: "Permanent Marker", cursive;
     font-size: 20px;
-
     color: white;
 }
 
@@ -50,7 +49,22 @@ body{
     color: white;
 }
 
-#resetBtn{
+.music{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    left: -320px;
+    align-items: center;
+    justify-content: space-between;
+    top: -600px;
+    color: white;
+}
+
+.side{
+    cursor: pointer;
+}
+
+#startBtn{
     font-family: "Permanent Marker", cursive;
     font-size: 22px;
     width: 100px;
@@ -58,6 +72,7 @@ body{
     border: 4px solid;
     border-radius: 15px;
     margin-top: 20px;
+    margin-left: 5px;
     cursor: pointer;
 }
 

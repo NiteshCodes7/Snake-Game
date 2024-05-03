@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Snake Game</title>
 </head>
 <body>
@@ -14,9 +15,10 @@
         <div id="ss" class="scores">Score:<span class="scores" id="scoreText">0</span></div>
         <div class="scores" id="s">Highest Score:<span class="scores" id="highestScore">0</span></div>
         </div>
-        <button id="resetBtn">Reset</button>
+        <button class="side" id="startBtn">Start</button>
     </div>
 
+    <span class="music">Play Music:&nbsp;<button class="side" id="musicBtn"><i id="musicIcon" class="fas fa-volume-up"></i></button></span>
     <div class="develop">Made by Nitesh</div>
 <script src="script.js"></script>    
 </body>

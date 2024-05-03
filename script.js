@@ -3,8 +3,8 @@ const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
 let highScore = 0;
 parseInt(localStorage.getItem("highScore"));
+const startBtn = document.getElementById("startBtn");
 const highestScore = document.getElementById("highestScore");
-const resetBtn = document.querySelector("#resetBtn");
 const foodSound = new Audio('food.mp3');
 const gameOver = new Audio('gameover.mp3');
 const move = new Audio('move.mp3')
@@ -32,13 +32,16 @@ let snake = [
 ];
 
 window.addEventListener("keydown", changeDirection);
-resetBtn.addEventListener("click", resetGame);
-
-gameStart();
+startBtn.addEventListener("click", function() {
+    if(startBtn.textContent == "Start")
+    gameStart();
+    else if(startBtn.textContent == "Reset"){
+        startBtn.addEventListener("click", resetGame());
+    }
+});
 
 function gameStart(){
     running = true;
-    music.play();
     scoreText.textContent = score;
     createFood();
     drawFood();
@@ -180,21 +183,43 @@ function displayGameOver(){
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText("GAME OVER!!", gameWidth / 2, gameHeight / 2);
-    music.pause();
     gameOver.play();
+    music.pause();
     running = false;
+    startBtn.textContent = "Reset";
 };
 
-window.addEventListener("beforeunload", function(){
-    resetGame();
-    music.play();
-})
+const muxsicBtn = document.getElementById("musicBtn");
+const musicIcon = document.getElementById("musicIcon");
+let musixcPlaying = true; // Flag to track music state
 
-window.onload = function(){
+muxsicBtn.addEventListener("click", function() {
+    if (musixcPlaying) {
+        music.pause(); // Pause the music
+        musixcPlaying = false; // Update the flag
+        // Change icon to volume off
+        musicIcon.classList.remove("fa-volume-up");
+        musicIcon.classList.add("fa-volume-mute");
+    } else {
+        music.play(); // Play the music
+        musixcPlaying = true; // Update the flag
+        // Change icon to volume up
+        musicIcon.classList.remove("fa-volume-mute");
+        musicIcon.classList.add("fa-volume-up");
+    }
+});
+
+window.onload = async function() {
     music.play();
     highScore = parseInt(localStorage.getItem("highScore")) || 0;
     highestScore.textContent = highScore; 
-}
+    try {
+        await loadAudio('music.mp3');
+    } catch (error) {
+        console.error('Error loading audio:', error);
+    }
+};
+
 
 function resetGame(){
     score = 0;
