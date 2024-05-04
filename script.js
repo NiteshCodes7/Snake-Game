@@ -42,7 +42,6 @@ startBtn.addEventListener("click", function() {
 
 function gameStart(){
     running = true;
-    music.play
     scoreText.textContent = score;
     createFood();
     drawFood();
