@@ -46,6 +46,7 @@ function gameStart(){
     createFood();
     drawFood();
     nextTick();
+    document.getElementById("box").style.display = 'none';
 };
 
 function nextTick(){
@@ -191,19 +192,18 @@ function displayGameOver(){
 
 const muxsicBtn = document.getElementById("musicBtn");
 const musicIcon = document.getElementById("musicIcon");
-let musixcPlaying = true; // Flag to track music state
+let musixcPlaying = 0;
 
 muxsicBtn.addEventListener("click", function() {
-    if (musixcPlaying) {
-        music.pause(); // Pause the music
-        musixcPlaying = false; // Update the flag
-        // Change icon to volume off
+    if(musixcPlaying == 0){
+        music.pause();
+        musixcPlaying++;
         musicIcon.classList.remove("fa-volume-up");
         musicIcon.classList.add("fa-volume-mute");
-    } else {
-        music.play(); // Play the music
-        musixcPlaying = true; // Update the flag
-        // Change icon to volume up
+    }
+    else if(musixcPlaying != 0){
+        music.play();
+        musixcPlaying = 0;
         musicIcon.classList.remove("fa-volume-mute");
         musicIcon.classList.add("fa-volume-up");
     }
@@ -219,7 +219,6 @@ window.onload = async function() {
         console.error('Error loading audio:', error);
     }
 };
-
 
 function resetGame(){
     score = 0;
