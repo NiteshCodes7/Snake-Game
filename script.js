@@ -210,7 +210,16 @@ muxsicBtn.addEventListener("click", function() {
     }
 });
 
+function loadAudio(music) {
+    return new Promise((resolve, reject) => {
+        const audio = new Audio(music);
+        audio.onloadeddata = () => resolve(audio);
+        audio.onerror = (error) => reject(error);
+    });
+}
+
 window.onload = async function() {
+    music.play();
     highScore = parseInt(localStorage.getItem("highScore")) || 0;
     highestScore.textContent = highScore; 
     try {
@@ -218,7 +227,6 @@ window.onload = async function() {
     } catch (error) {
         console.error('Error loading audio:', error);
     }
-    music.play();
 };
 
 function resetGame(){
