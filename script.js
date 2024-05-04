@@ -42,6 +42,7 @@ startBtn.addEventListener("click", function() {
 
 function gameStart(){
     running = true;
+    music.play
     scoreText.textContent = score;
     createFood();
     drawFood();
@@ -210,7 +211,6 @@ muxsicBtn.addEventListener("click", function() {
 });
 
 window.onload = async function() {
-    music.play();
     highScore = parseInt(localStorage.getItem("highScore")) || 0;
     highestScore.textContent = highScore; 
     try {
@@ -218,9 +218,13 @@ window.onload = async function() {
     } catch (error) {
         console.error('Error loading audio:', error);
     }
+    music.play();
 };
 
 function resetGame(){
+    if(musixcPlaying == 0){
+        music.play();
+    }
     score = 0;
     scoreText.textContent = score;
     xVelocity = unitSize;
